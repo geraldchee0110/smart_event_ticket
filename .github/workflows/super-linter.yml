@@ -1,9 +1,3 @@
-# This workflow executes several linters on changed files based on languages used in your code base whenever
-# you push a code or open a pull request.
-#
-# You can adjust the behavior by modifying this file.
-# For more information, see:
-# https://github.com/github/super-linter
 name: Lint Code Base
 
 on:
@@ -21,14 +15,15 @@ jobs:
         with:
           fetch-depth: 0  # Full git history for detecting changed files
 
-      - name: Lint Code Base
+      - name: Run Super Linter
+        id: lint
         uses: github/super-linter@v5
         env:
           VALIDATE_ALL_CODEBASE: false  # Lint only changed files
           DEFAULT_BRANCH: "main"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-          # Enable specific linters for your tech stack
+          # Enable linters for your tech stack
           VALIDATE_PYTHON: true
           VALIDATE_JAVASCRIPT_ES: true
           VALIDATE_TYPESCRIPT_ES: true
@@ -40,5 +35,9 @@ jobs:
           # Optionally, disable specific linters if unnecessary
           DISABLE_LINTERS: "GO,DOCKERFILE"
 
-      - name: Show Linter Output
-        run: cat super-linter.log || true  # Show linter output if it exists
+      # Force the workflow to fail if linting errors are detected
+      - name: Fail on Lint Errors
+        if: failure()
+        run: |
+          echo "❌ Linting errors detected. Fix them before pushing!"
+          exit 1
