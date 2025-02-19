@@ -10,21 +10,22 @@ jobs:
   run-lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: ✅ Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Ensure full repository history
 
-      - name: Debug
-        run: |
-          echo "📂 Listing all files in the workspace..."
-          ls -R /github/workspace
+      - name: ✅ Debug
+          echo "📂 Checking current working directory..."
+          pwd
+          echo "📂 Listing all files..."
+          ls -R .
 
-      - name: Run Super Linter
+      - name: ✅ Run Super Linter
         id: lint
         uses: github/super-linter@v5
         env:
-          VALIDATE_ALL_CODEBASE: true  # ✅ Force linting for all files
+          VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: "main"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -36,6 +37,3 @@ jobs:
           VALIDATE_JSON: true
           VALIDATE_YAML: true
           VALIDATE_MARKDOWN: true
-
-          # ✅ Explicitly set the path to scan all files
-          LINTER_RULES_PATH: "/github/workspace/backend/user-service/app"
