@@ -13,17 +13,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Full git history for detecting changed files
+          fetch-depth: 0  # Ensure full repository history
+
+      - name: Debug
+        run: |
+          echo "📂 Listing all files in the workspace..."
+          ls -R /github/workspace
 
       - name: Run Super Linter
         id: lint
         uses: github/super-linter@v5
         env:
-          VALIDATE_ALL_CODEBASE: true  # Lint only changed files
+          VALIDATE_ALL_CODEBASE: true  # ✅ Force linting for all files
           DEFAULT_BRANCH: "main"
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-          # Enable linters for your tech stack
+          # ✅ Explicitly enable linters
           VALIDATE_PYTHON: true
           VALIDATE_JAVASCRIPT_ES: true
           VALIDATE_TYPESCRIPT_ES: true
@@ -32,12 +37,5 @@ jobs:
           VALIDATE_YAML: true
           VALIDATE_MARKDOWN: true
 
-          # Optionally, disable specific linters if unnecessary
-          DISABLE_LINTERS: "GO,DOCKERFILE"
-
-      # Force the workflow to fail if linting errors are detected
-      - name: Fail on Lint Errors
-        if: failure()
-        run: |
-          echo "❌ Linting errors detected. Fix them before pushing!"
-          exit 1
+          # ✅ Explicitly set the path to scan all files
+          LINTER_RULES_PATH: "/github/workspace/backend/user-service/app"
