@@ -11,6 +11,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+
 jobs:
   run-lint:
     runs-on: ubuntu-latest
@@ -18,12 +19,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          # Full git history is needed to get a proper list of changed files within `super-linter`
-          fetch-depth: 0
+          fetch-depth: 0  # Full git history for detecting changed files
 
       - name: Lint Code Base
-        uses: github/super-linter@v4
+        uses: github/super-linter@v5
         env:
-          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_ALL_CODEBASE: false  # Lint only changed files
           DEFAULT_BRANCH: "main"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          # Enable specific linters for your tech stack
+          VALIDATE_PYTHON: true
+          VALIDATE_JAVASCRIPT_ES: true
+          VALIDATE_TYPESCRIPT_ES: true
+          VALIDATE_VUE: true
+          VALIDATE_JSON: true
+          VALIDATE_YAML: true
+          VALIDATE_MARKDOWN: true
+
+          # Optionally, disable specific linters if unnecessary
+          DISABLE_LINTERS: "GO,DOCKERFILE"
+
+      - name: Show Linter Output
+        run: cat super-linter.log || true  # Show linter output if it exists

@@ -1,0 +1,23 @@
+
+
+services:  # Add this block to contain all services
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    ports:
+      - "5001:5001"
+    env_file:
+      - .env
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"  # Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest    
+
+volumes:
+  postgres_data:  # Declare volumes outside the services block

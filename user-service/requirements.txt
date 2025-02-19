@@ -1,6 +1,0 @@
-Flask
-Flask-SQLAlchemy
-Flask-RESTful
-Flask-JWT-Extended
-psycopg2
-requests
