@@ -19,7 +19,7 @@ jobs:
         id: lint
         uses: github/super-linter@v5
         env:
-          VALIDATE_ALL_CODEBASE: false  # Lint only changed files
+          VALIDATE_ALL_CODEBASE: true  # Lint only changed files
           DEFAULT_BRANCH: "main"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
