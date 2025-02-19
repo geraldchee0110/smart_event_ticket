@@ -8,7 +8,7 @@ user_bp = Blueprint("users", __name__)
 # 📌 User Registration (Hash password before storing)
 @user_bp.route("/register", methods=["POST"])
 def register():
-    try:
+try:
         data = request.get_json()
         if "username" not in data or "email" not in data or "password" not in data:
             return jsonify({"error": "Missing username, email, or password"}), 400
