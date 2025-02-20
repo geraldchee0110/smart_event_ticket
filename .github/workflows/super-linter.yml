@@ -6,25 +6,24 @@ on:
   pull_request:
     branches: [ "main" ]
 
+permissions:
+  contents: read
+  checks: write
+  statuses: write
+
 jobs:
   run-lint:
     runs-on: ubuntu-latest
     steps:
       - name: ✅ Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Ensure full repository history
-
 
       - name: ✅ Run Super Linter
-        id: lint
         uses: github/super-linter@v5
         env:
           VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: "main"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-          # ✅ Explicitly enable linters
           VALIDATE_PYTHON: true
           VALIDATE_JAVASCRIPT_ES: true
           VALIDATE_TYPESCRIPT_ES: true
