@@ -15,11 +15,6 @@ jobs:
         with:
           fetch-depth: 0  # Ensure full repository history
 
-      - name: ✅ Debug
-          echo "📂 Checking current working directory..."
-          pwd
-          echo "📂 Listing all files..."
-          ls -R .
 
       - name: ✅ Run Super Linter
         id: lint
