@@ -61,5 +61,5 @@ def login():
 @user_bp.route("/protected", methods=["GET"])
 @jwt_required()
 def protected():
-    current_user = get_jwt_identity()
+current_user = get_jwt_identity()
     return jsonify({"message": "Access granted", "user": current_user}), 200
