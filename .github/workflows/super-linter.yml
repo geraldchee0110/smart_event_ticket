@@ -1,14 +1,8 @@
 name: Lint Code Base
 
 on:
-  push:
-      - main
-      - development
-      - feature/*
-  pull_request:
-      - main
-      - development
-      - feature/*
+  push: ["main","development", "feature/*"]
+  pull_request: ["main","development", "feature/*"]
 
 permissions:
   contents: read
