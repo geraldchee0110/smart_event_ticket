@@ -62,4 +62,4 @@ def login():
 @jwt_required()
 def protected():
 current_user = get_jwt_identity()
-return jsonify({"message": "Access granted", "user": current_user}), 200
+    return jsonify({"message": "Access granted", "user": current_user}), 200
